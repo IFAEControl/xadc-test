@@ -78,7 +78,8 @@
  * This file should be always in sync with <kernel>/include/linux/iio/events.h
  *
  */
-#include <events.h>
+#include <linux/iio/events.h>
+#include <linux/iio/types.h>
 
 #include <xadc_core_if.h>
 #include "xadc_core.h"
@@ -238,14 +239,12 @@ static void do_event_action(enum iio_event_type ev_type, enum iio_chan_type ch_t
 	bool isActive = false;
 	bool isEventValid = false;
 
+	printf("%d\n", ev_type);
+
 	switch(ev_type)
 	{
 	case IIO_EV_TYPE_THRESH:
 		isActive = true;
-		isEventValid = true;
-		break;
-	case IIO_EV_TYPE_THRESH_NOT_ACTIVE:
-		isActive = false;
 		isEventValid = true;
 		break;
 	default:

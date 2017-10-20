@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Werror -Wcast-qua
 
 find_package(Threads REQUIRED)
 
-include_directories(xadc_lib/include xadc_lib/linux_include include)
+include_directories(xadc_lib/include include)
 
 file(GLOB LIB_SRC xadc_lib/src/*.c)
 add_library(xadc_core STATIC ${LIB_SRC})
@@ -20,6 +20,8 @@ install(TARGETS xadc_test DESTINATION bin)
 
 # Cppcheck tests
 
+file(GLOB APP_SRC ${APP_SRC} include/*.h)
+
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 set(INCLUDE_DIRECTORIES "")
 foreach(dir ${dirs})
@@ -31,11 +33,11 @@ if(EXISTS ${CPPCHECK_BIN})
   add_custom_target(cppcheck
           COMMAND cppcheck
           --enable=all 
+          --language=c++
           ${APP_SRC}
           ${INCLUDE_DIRECTORIES} 
           --suppress=missingIncludeSystem -v -q --error-exitcode=2
           --template='[{file}:{line}] [{severity},{id}] {message}'
-          --suppress=unusedStructMember
   )
 
   add_dependencies(xadc_test cppcheck)
