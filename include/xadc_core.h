@@ -23,8 +23,8 @@ class xadc_core {
     float touch(const xadc_param p) const;
     float get_value(const xadc_param p) const;
     bool get_alarm_status(const xadc_alarm a) const;
-    void set_threshold(const xadc_alarm a, float threshold_low,
-                       float threshold_high, struct Xadc_callback* callback = nullptr);
+    void set_threshold(const xadc_alarm a, float threshold_low, float threshold_high,
+                       struct Xadc_callback* callback = nullptr);
 
   private:
     const bool _full;
