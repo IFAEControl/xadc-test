@@ -9,11 +9,15 @@ find_package(Threads REQUIRED)
 
 include_directories(xadc_lib/include include)
 
-file(GLOB LIB_SRC xadc_lib/src/*.c)
-add_library(xadc_core STATIC ${LIB_SRC})
+file(GLOB LIB_SRC xadc_lib/src/*.c src/xadc_core.cpp)
+add_library(xadc_core SHARED ${LIB_SRC})
 target_link_libraries(xadc_core ${CMAKE_THREAD_LIBS_INIT})
+install(TARGETS xadc_core DESTINATION lib)
 
-file(GLOB APP_SRC src/*.cpp)
+install(DIRECTORY DESTINATION include/xadc)
+install(FILES include/xadc_core.h DESTINATION include/xadc)
+
+file(GLOB APP_SRC src/main.cpp)
 add_executable(xadc_test ${APP_SRC})
 target_link_libraries(xadc_test xadc_core)
 install(TARGETS xadc_test DESTINATION bin)
