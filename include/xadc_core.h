@@ -17,7 +17,7 @@ enum class xadc_alarm : unsigned {
 
 class xadc_core {
   public:
-    explicit xadc_core(bool f = false);
+    explicit xadc_core(bool f = false, bool dummy = false);
     ~xadc_core();
 
     float touch(const xadc_param p) const;
@@ -28,4 +28,5 @@ class xadc_core {
 
   private:
     const bool _full;
+    const bool _dummy;
 };
